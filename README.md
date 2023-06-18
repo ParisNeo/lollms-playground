@@ -1,6 +1,8 @@
 
 # LoLLMs Playground
-
+<div align="center">
+  <img src="https://github.com/ParisNeo/lollms/blob/main/lollms/assets/logo.png" alt="Logo" width="200" height="200">
+</div>
 ![GitHub license](https://img.shields.io/github/license/ParisNeo/lollms-playground)
 ![GitHub issues](https://img.shields.io/github/issues/ParisNeo/lollms-playground)
 ![GitHub stars](https://img.shields.io/github/stars/ParisNeo/lollms-playground)
