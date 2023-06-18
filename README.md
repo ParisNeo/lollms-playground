@@ -1,6 +1,16 @@
 
 # LoLLMs Playground
 
+![GitHub license](https://img.shields.io/github/license/ParisNeo/lollms-playground)
+![GitHub issues](https://img.shields.io/github/issues/ParisNeo/lollms-playground)
+![GitHub stars](https://img.shields.io/github/stars/ParisNeo/lollms-playground)
+![GitHub forks](https://img.shields.io/github/forks/ParisNeo/lollms-playground)
+[![Discord](https://img.shields.io/discord/1092918764925882418?color=7289da&label=Discord&logo=discord&logoColor=ffffff)](https://discord.gg/4rR282WJb6)
+[![Follow me on Twitter](https://img.shields.io/twitter/follow/SpaceNerduino?style=social)](https://twitter.com/SpaceNerduino)
+[![Follow Me on YouTube](https://img.shields.io/badge/Follow%20Me%20on-YouTube-red?style=flat&logo=youtube)](https://www.youtube.com/user/Parisneo)
+[![pages-build-deployment](https://github.com/ParisNeo/lollms-webui/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/ParisNeo/lollms-webui/actions/workflows/pages/pages-build-deployment)
+
+
 This tool provides a web-based interface to test LoLLMs endpoints and generate text using a LoLLMs server.
 
 ## Prerequisites
