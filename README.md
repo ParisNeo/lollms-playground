@@ -70,6 +70,8 @@ To use this tool, you need to have [Node.js](https://nodejs.org) installed on yo
 ![image](https://github.com/ParisNeo/lollms-playground/assets/827993/6c91dc3a-887f-410f-a0ff-c10331f5a6a6)
 
 7. The generated text will be displayed in the output section of the page.
+![image](https://github.com/ParisNeo/lollms-playground/assets/827993/ae7733ab-f7aa-4fe8-8f51-33afa6ab903b)
+![image](https://github.com/ParisNeo/lollms-playground/assets/827993/33e95e4e-3763-4d4c-b1a7-1e3620f416bc)
 
 ## Customization
 
