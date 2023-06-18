@@ -1,5 +1,5 @@
 
-# LoLLMs Endpoint Test Tool
+# LoLLMs Playground
 
 This tool provides a web-based interface to test LoLLMs endpoints and generate text using a LoLLMs server.
 
@@ -55,13 +55,19 @@ To use this tool, you need to have [Node.js](https://nodejs.org) installed on yo
    http-server
    ```
 
-3. Open your web browser and visit `http://localhost:8080/lollms_playground.html` (or the appropriate URL) to access the LoLLMs Endpoint Test Tool.
+
+3. Open your web browser and visit `http://localhost:8080` (or the appropriate URL) to access the LoLLMs Endpoint Test Tool.
+![image](https://github.com/ParisNeo/lollms-playground/assets/827993/f69811c5-b029-4321-b31a-e4699b57ff49)
+4. Press the icon to get to the connection ui.
+![image](https://github.com/ParisNeo/lollms-playground/assets/827993/df7de411-8017-4f8a-a86a-c9482f62ef94)
 
 4. Fill in the host and port fields with the appropriate values for your LoLLMs server.
 
 5. Click the "Connect" button to establish a connection with the LoLLMs server.
+![image](https://github.com/ParisNeo/lollms-playground/assets/827993/bb112985-b55a-4b31-9aa4-e42c0e703610)
 
 6. Once connected, you can enter a prompt and click the "Generate Text" button to initiate text generation.
+![image](https://github.com/ParisNeo/lollms-playground/assets/827993/6c91dc3a-887f-410f-a0ff-c10331f5a6a6)
 
 7. The generated text will be displayed in the output section of the page.
 
