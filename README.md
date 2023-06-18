@@ -52,7 +52,7 @@ To use this tool, you need to have [Node.js](https://nodejs.org) installed on yo
 2. Start the web server for the LoLLMs Endpoint Test Tool.
 
    ```bash
-   npm start
+   http-server
    ```
 
 3. Open your web browser and visit `http://localhost:8080/lollms_playground.html` (or the appropriate URL) to access the LoLLMs Endpoint Test Tool.
