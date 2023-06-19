@@ -29,7 +29,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="port" class="block text-sm font-medium text-gray-700">Port:</label>
-                    <input id="port" type="number" class="mt-1 p-2 border border-gray-300 rounded-md w-full" value="9600" />
+                    <input id="port" type="number" class="mt-1 p-2 border border-gray-300 rounded-md w-full" value="9601" />
                 </div>
                 <button id="connect-btn"
                     class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-bold py-2 px-4 rounded">Connect</button>
@@ -54,6 +54,8 @@
     </div>
 
     <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+
+
     <script>
         const socket = io();
         const connectButton = document.getElementById('connect-btn');
@@ -110,7 +112,7 @@
             // Toggle button visibility
             generateButton.classList.remove('hidden');
             stopButton.classList.add('hidden');
-
+            console.log("Generation canceled OK")
         });
 
         
