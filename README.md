@@ -29,17 +29,13 @@ To use this tool, you need to have [Node.js](https://nodejs.org) installed on yo
    git clone https://github.com/ParisNeo/lollms-playground.git
    ```
 
-2. Navigate to the project directory (if you are not yet inside that directory).
+2. Install the dependencies.
 
    ```bash
-   cd lollms-playground
+   npm install
    ```
 
-3. Install the dependencies.
-
-   ```bash
-   npm install http-server
-   ```
+Now you are ready for some action.
 
 ## Usage
 
@@ -63,14 +59,19 @@ To use this tool, you need to have [Node.js](https://nodejs.org) installed on yo
      lollms-server --help
      ```
 
-2. Start the web server for the LoLLMs Endpoint Test Tool.
+2. Start the web server for the LoLLMs Playground.
 
    ```bash
-   http-server
+   node server.js
+   ```
+   or if you want to use custom port number:
+
+   ```bash
+   node server.js 8080
    ```
 
 
-3. Open your web browser and visit `http://localhost:8080` (or the appropriate URL) to access the LoLLMs Endpoint Test Tool.
+3. Open your web browser and visit `http://localhost:3000` (or the appropriate URL) to access the LoLLMs Playground.
 ![image](https://github.com/ParisNeo/lollms-playground/assets/827993/f69811c5-b029-4321-b31a-e4699b57ff49)
 4. Press the icon to get to the connection ui.
 ![image](https://github.com/ParisNeo/lollms-playground/assets/827993/df7de411-8017-4f8a-a86a-c9482f62ef94)
@@ -89,7 +90,7 @@ To use this tool, you need to have [Node.js](https://nodejs.org) installed on yo
 
 ## Customization
 
-You can customize the appearance and behavior of the tool by modifying the HTML, CSS, and JavaScript code in the `test_generation.html` file.
+You can customize the appearance and behavior of the tool by modifying the HTML, CSS, and JavaScript code in the `lollms_playground.html` file.
 
 ## Contributing
 
