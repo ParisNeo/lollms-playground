@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LoLLMs Endpoint Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.4/nouislider.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.4/nouislider.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .hover\:bg-blue-600:hover {
@@ -14,9 +16,37 @@
         .active\:bg-blue-700:active {
             background-color: #1d4ed8;
         }
+        /* Custom slider handle style */
+        .noUi-handle {
+            background-color: #2563eb;
+            border-color: #1d4ed8;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.15);
+            width: 5px;
+            height: 5px;
+            border-radius: 15px;
+        }
+
+        /* Custom slider track style */
+        .noUi-connect {
+            background-color: #2563eb;
+        }
+
+        /* Custom slider tooltip style */
+        .slider-value {
+            display: inline-block;
+            margin-left: 10px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* Shrink the button size */
+        .small-button {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
     </style>
 </head>
-
 <body class="bg-gray-100 w-full">
     <div class="flex items-center justify-center min-h-screen w-full">
         <div class="w-full bg-blue-300 p-6 rounded shadow m-4">
@@ -35,21 +65,42 @@
                     class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-bold py-2 px-4 rounded">Connect</button>
                 <label class="hidden" id = "connecting">connecting ...</label>
             </div>
-            <div id="generation-section" class="hidden w-full">
-                <div>
-                    <button id="generate-btn"
-                    class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-bold py-2 px-4 rounded">Generate
-                    Text</button>
+            <div  id="generation-section" class="flex flex-row hidden">
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <div>
+                            <button id="generate-btn" class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-bold py-2 px-4 rounded">Generate Text</button>
+                            <button id="stop-btn" class="bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-bold py-2 px-4 rounded hidden">Stop Generation</button>
+                            <button id="export-btn" class="bg-green-500 hover:bg-green-600 active:bg-green-700 text-white font-bold py-2 px-4 rounded">Export Text</button>
+                        </div>
+                        <div>
+                            <textarea id="text" class="mt-4 p-2 border border-gray-300 rounded-md h-64 overflow-y-scroll w-full" type="text"></textarea>
+                        </div>
+                    </div>
+                    <div id="settings" class="w-32 ml-4">
+                        <div class="mb-4">
+                            <label for="temperature" class="block text-sm font-medium text-gray-700">Temperature:<span id="temperature-value" class="slider-value">1</span></label>
+                            <div id="temperature-slider" class="mt-1 slider"></div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="top-k" class="block text-sm font-medium text-gray-700">Top K:<span id="top-k-value" class="slider-value">1</span></label>
+                            <div id="top-k-slider" class="mt-1"></div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="top-p" class="block text-sm font-medium text-gray-700">Top P:<span id="top-p-value" class="slider-value">1</span></label>
+                            <div id="top-p-slider" class="mt-1"></div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="repeat-penalty" class="block text-sm font-medium text-gray-700">Repeat Penalty:<span id="repeat-penalty-value" class="slider-value">1</span></label>
+                            <div id="repeat-penalty-slider" class="mt-1"></div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="repeat-last-n" class="block text-sm font-medium text-gray-700">Repeat Last N:<span id="repeat-last-n-value" class="slider-value">1</span></label>
+                            <div id="repeat-last-n-slider" class="mt-1"></div>
+                        </div>                
+                    </div>
                 </div>
-                <div>
-                    <button id="stop-btn"
-                    class="bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-bold py-2 px-4 rounded hidden">Stop
-                    Generation</button>
-                </div>
-                <div>
-                    <textarea  id="text" class="mt-4 p-2 border border-gray-300 rounded-md h-64 overflow-y-scroll w-full" type="text"></textarea>
-                </div>
-            </div>
+            </div>            
         </div>
     </div>
 
@@ -57,6 +108,144 @@
 
 
     <script>
+        let temperatureValue = 1;
+        let topKValue = 50;
+        let topPValue = 0.5;
+        let repeatPenaltyValue = 1.6;
+        let repeatLastNValue = 30;
+        // Initialize sliders
+        const temperatureSlider = document.getElementById('temperature-slider');
+        const topKSlider = document.getElementById('top-k-slider');
+        const topPSlider = document.getElementById('top-p-slider');
+        const repeatPenaltySlider = document.getElementById('repeat-penalty-slider');
+        const repeatLastNSlider = document.getElementById('repeat-last-n-slider');
+
+        const temperatureValue_ui = document.getElementById('temperature-value');
+        const topKValue_ui = document.getElementById('top-k-value');
+        const topPValue_ui = document.getElementById('top-p-value');
+        const repeatPenaltyValue_ui = document.getElementById('repeat-penalty-value');
+        const repeatLastNValue_ui = document.getElementById('repeat-last-n-value');
+
+        temperatureValue_ui.innerText = temperatureValue
+        topKValue_ui.innerText = topKValue
+        topPValue_ui.innerText = topPValue
+        repeatPenaltyValue_ui.innerText = repeatPenaltyValue
+        repeatLastNValue_ui.innerText = repeatLastNValue
+
+
+        noUiSlider.create(temperatureSlider, {
+            start: 1,
+            step: 0.1,
+            range: {
+                min: 0.1,
+                max: 2
+            },
+            format: {
+                to: value => parseFloat(value.toFixed(1)),
+                from: value => parseFloat(value)
+            },
+            value:temperatureValue
+        });
+
+        noUiSlider.create(topKSlider, {
+            start: 50,
+            step: 1,
+            range: {
+                min: 1,
+                max: 200
+            },
+            format: {
+                to: value => Math.round(value),
+                from: value => parseFloat(value)
+            },
+            value:topKValue
+        });
+
+        noUiSlider.create(topPSlider, {
+            start: 0.5,
+            step: 0.01,
+            range: {
+                min: 0,
+                max: 1
+            },
+            format: {
+                to: value => parseFloat(value.toFixed(2)),
+                from: value => parseFloat(value)
+            },
+            value:topPValue
+        });
+
+
+
+        noUiSlider.create(repeatPenaltySlider, {
+            start: 1.5,
+            step: 0.1,
+            range: {
+                min: 0.3,
+                max: 5.0
+            },
+            format: {
+                to: value => parseFloat(value.toFixed(1)),
+                from: value => parseFloat(value)
+            },
+            value:repeatPenaltyValue
+        });
+
+        noUiSlider.create(repeatLastNSlider, {
+            start: 10,
+            step: 1,
+            range: {
+                min: 1,
+                max: 100
+            },
+            format: {
+                to: value => Math.round(value),
+                from: value => parseFloat(value)
+            },
+            value:repeatLastNValue
+        });        
+
+
+        // Event handler for temperature slider value change
+        temperatureSlider.noUiSlider.on('change', (values, handle) => {
+            temperatureValue = parseFloat(values[handle]);
+            temperatureValue_ui.innerText = temperatureValue
+            // Update the temperature value in your code or send it to the server
+            console.log('Temperature:', temperatureValue);
+        });
+
+        // Event handler for top-k slider value change
+        topKSlider.noUiSlider.on('change', (values, handle) => {
+            topKValue = Math.round(values[handle]);
+            topKValue_ui.innerText = topKValue
+            // Update the top-k value in your code or send it to the server
+            console.log('Top K:', topKValue);
+        });
+
+        // Event handler for top-p slider value change
+        topPSlider.noUiSlider.on('change', (values, handle) => {
+            topPValue = parseFloat(values[handle]);
+            topPValue_ui.innerText = topPValue
+            // Update the top-p value in your code or send it to the server
+            console.log('Top P:', topPValue);
+        });
+
+
+        // Event handler for repeat penalty slider value change
+        repeatPenaltySlider.noUiSlider.on('change', (values, handle) => {
+            repeatPenaltyValue = parseFloat(values[handle]);
+            repeatPenaltyValue_ui.innerText = repeatPenaltyValue
+            console.log('Repeat Penalty:', repeatPenaltyValue);
+        });
+
+        // Event handler for repeat last N slider value change
+        repeatLastNSlider.noUiSlider.on('change', (values, handle) => {
+            repeatLastNValue = Math.round(values[handle]);
+            repeatLastNValue_ui.innerText = repeatLastNValue
+            console.log('Repeat Last N:', repeatLastNValue);
+        });
+
+
         const socket = io();
         const connectButton = document.getElementById('connect-btn');
         const generateButton = document.getElementById('generate-btn');
@@ -137,7 +326,14 @@
             var prompt = outputDiv.value
             console.log(prompt)
             // Trigger the 'generate_text' event with the prompt
-            socket.emit('generate_text', { prompt, personality: -1, n_predicts: 1024 });
+            socket.emit('generate_text', { prompt, personality: -1, n_predicts: 1024 ,
+            parameters: {
+                temperature: temperatureValue,
+                top_k: topKValue,
+                top_p: topPValue,
+                repeat_penalty: repeatPenaltyValue, // Update with desired repeat penalty value
+                repeat_last_n: repeatLastNValue // Update with desired repeat_last_n value
+            }});
 
             // Toggle button visibility
             generateButton.classList.add('hidden');
@@ -150,6 +346,24 @@
             socket.emit('cancel_generation',{});
 
         });
+
+        // Function to export text as a text file
+        function exportTextToFile() {
+            const outputDiv = document.getElementById('text');
+            const textToExport = outputDiv.value;
+            const element = document.createElement('a');
+            const file = new Blob([textToExport], {type: 'text/plain'});
+            element.href = URL.createObjectURL(file);
+            element.download = 'exported_text.txt';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // Triggered when the "Export Text" button is clicked
+        const exportButton = document.getElementById('export-btn');
+        exportButton.addEventListener('click', exportTextToFile);
+
     </script>
 </body>
 
