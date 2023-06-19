@@ -29,16 +29,16 @@ To use this tool, you need to have [Node.js](https://nodejs.org) installed on yo
    git clone https://github.com/ParisNeo/lollms-playground.git
    ```
 
-2. Navigate to the project directory.
+2. Navigate to the project directory (if you are not yet inside that directory).
 
    ```bash
-   cd socketio-endpoint-test-tool
+   cd lollms-playground
    ```
 
 3. Install the dependencies.
 
    ```bash
-   npm install
+   npm install http-server
    ```
 
 ## Usage
