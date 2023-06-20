@@ -116,6 +116,7 @@
         let topPValue = 0.5;
         let repeatPenaltyValue = 1.6;
         let repeatLastNValue = 30;
+        let seedValue = -1;
         // Initialize sliders
         const temperatureSlider = document.getElementById('temperature-slider');
         const topKSlider = document.getElementById('top-k-slider');
@@ -335,7 +336,8 @@
                 top_k: topKValue,
                 top_p: topPValue,
                 repeat_penalty: repeatPenaltyValue, // Update with desired repeat penalty value
-                repeat_last_n: repeatLastNValue // Update with desired repeat_last_n value
+                repeat_last_n: repeatLastNValue, // Update with desired repeat_last_n value
+                seed: seedValue
             }});
 
             // Toggle button visibility
