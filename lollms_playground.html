@@ -278,6 +278,15 @@
             stopButton.classList.add('hidden');
         });
 
+        socket.on('generation_error', data => {
+            console.log('generation_error:', data);
+            // Toggle button visibility
+            generateButton.classList.remove('hidden');
+            stopButton.classList.add('hidden');
+        });
+
+        
+
         // Event handler for successful connection
         socket.on('connect', () => {
             console.log('Connected to LoLLMs server');
